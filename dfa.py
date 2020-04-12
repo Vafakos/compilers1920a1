@@ -1,29 +1,15 @@
-"""
-Κώδικας που θα χρησιμοποιηθεί ως βάση για την 1η εργασία
-των Μεταγλωττιστών (αναγνώριση κειμένου μέσω αυτομάτου DFA).
-
-ΠΡΟΣΟΧΗ: Προσθήκες στον κώδικα επιτρέπονται μόνο
-στα σημεία (Α), (Β) και (Γ) - διαβάστε τα σχόλια!
-"""
-
-
-transitions = { 
-
-	# (Α) Συμπληρώστε τον πίνακα μεταβάσεων ως λεξικό (dictionary).
-	# Η αρχική κατάσταση πρέπει να ονομάζεται 's0'.
-	# Για λεπτομέρειες δείτε στο:
-	# http://mixstef.github.io/courses/compilers/lecturedoc/unit1/module1.html#id7
-
+transitions = { 's0': { 'DIGIT':'s1', 'DOT':'s2'},
+				's1': { 'DIGIT':'s1', 'DOT':'s3'},
+				's2': { 'DIGIT':'s5'},
+				's3': { 'DIGIT':'s4'},
+				's4': { 'DIGIT':'s4'},
+				's5': { 'DIGIT':'s5'}
      	      } 
 
 
-accepts = { 
-
-	# (Β) Συμπληρώστε το λεξικό των καταστάσεων αποδοχής και των
-	# αντίστοιχων επιστρεφόμενων συμβόλων (tokens)
-	# Για λεπτομέρειες δείτε στο:
-	# http://mixstef.github.io/courses/compilers/lecturedoc/unit1/module1.html#id8
-
+accepts = { 's3':'FLOAT_TOKEN',
+			's4':'FLOAT_TOKEN',
+			's5':'FLOAT_TOKEN'
      	  }
 
 
@@ -35,10 +21,9 @@ def get_char(text,pos):
 	
 	c = text[pos]
 	
-	# (Γ) Προαιρετικά, μπορείτε να ομαδοποιήσετε τους
-	# χαρακτήρες εισόδου εδώ.
-	# Για λεπτομέρειες δείτε στο:
-	# http://mixstef.github.io/courses/compilers/lecturedoc/unit1/module1.html#id11
+	if c>='0' and c<='9': return 'DIGIT'
+
+	if c=='.': return 'DOT'
 	
 	return c
 	
